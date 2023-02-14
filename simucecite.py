@@ -34,3 +34,15 @@ arc = lambda x : (255./(2.*np.arctan(255./2.)))*np.arctan(x-(255./2.)) + 255./2.
 
 def contraste(i,j,pix):
 	return (int(arc(pix[i,j][0])),int(arc(pix[i,j][1])),int(arc(pix[i,j][2])))
+
+
+
+#####
+###  PARTIE LUMINOSITE
+
+lumiarc = lambda x : ((2*255.)/np.pi)*(np.arctan(x) + (np.pi/2.))
+reci_lumiarc = lambda y : np.tan(((y*np.pi)/(2.*255))-(np.pi/2.))
+lumi_delta = lambda y,delta : int(lumiarc(reci_lumiarc(y) + delta))
+
+def luminosite(pix, i, j, delta):
+	return (lumi_delta(pix[i,j][0],delta),lumi_delta(pix[i,j][1],delta),lumi_delta(pix[i,j][2],delta))

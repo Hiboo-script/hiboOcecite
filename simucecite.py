@@ -1,4 +1,5 @@
 import numpy as np
+import random as rd
 from PIL import Image
 
 ####
@@ -97,3 +98,30 @@ def filtre_l(pixin,pixout,size,alpha,beta,gamma):
 	for i in range(size[0]):
 		for j in range(size[1]):
 			pixout[i,j] = filtre(pixin, i, j, alpha, beta, gamma)
+
+
+#####
+##  PARTIE LUMINOSITE MOYENNE
+
+def lumi_moyenne_t(pixin,size):
+	somme = 0
+	ponderation = size[0]*size[1]*3
+
+	for i in range(size[0]):
+		for j in range(size[1]):
+			somme += pixin[i,j][0] + pixin[i,j][1] + pixin[i,j][2]
+	somme = somme * 1.
+
+	return (somme/ponderation)
+
+def lumi_moyenne_MC(pixin,size):
+	somme = 0
+	x = size[0]/2
+	y = size[1]/2
+	for i in range(1000):
+		x = rd.randint(0,size[0]-1)
+		y = rd.randint(0,size[1]-1)
+		somme += pixin[x,y][0] + pixin[x,y][1] + pixin[x,y][2]
+	somme = somme*1.
+	
+	return (somme/3000.)

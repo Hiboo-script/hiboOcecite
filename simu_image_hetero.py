@@ -24,7 +24,7 @@ def moyenne(i,j,r,pix):
 
 	return (int(somme[0]/ponderation[0]),int(somme[1]/ponderation[1]),int(somme[2]/ponderation[2]))
 
-im = Image.open('moyenne_test_11.png')
+im = Image.open('contrastemoyenne_1.png')
 pix = im.load()
 
 im_test = Image.new('RGB',(256,256))
@@ -35,8 +35,8 @@ pix_test = im_test.load()
 for i in range(256):
 	for j in range(256):
 		if (i>=20) and (i<=230) and (j>=20) and (j<=230):
-			pix_test[i,j] = moyenne(i,j,3,pix)
+			pix_test[i,j] = moyenne(i,j,10,pix)
 		else:
 			pix_test[i,j] = pix[i,j]
 
-im_test.save('moyenne_test_11_reset_1.png')
+im_test.save('contrastemoyenne_2(10p).png')

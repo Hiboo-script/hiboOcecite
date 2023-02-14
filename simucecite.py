@@ -26,14 +26,44 @@ def moyenne(i,j,r,pix):
 
 	return (int(somme[0]/ponderation[0]),int(somme[1]/ponderation[1]),int(somme[2]/ponderation[2]))
 
+def moyenne_l(pixin,pixout,size,r):
+	for i in range(20,size[0]-20):
+		for j in range(20,size[1]-20):
+			pixout[i,j] = moyenne(i,j,r,pixin)
+
 
 ####
 ## PARTIE CONTRASTE
 
 arc = lambda x : (255./(2.*np.arctan(255./2.)))*np.arctan(x-(255./2.)) + 255./2.
 
-def contraste(i,j,pix):
+def contraste_explo(i,j,pix):
 	return (int(arc(pix[i,j][0])),int(arc(pix[i,j][1])),int(arc(pix[i,j][2])))
+
+
+def contrasteExplo_l(pixin,pixout,size):
+	for i in range(size[0]):
+		for j in range(size[1]):
+			pixout[i,j] = contraste(i,j,pixin)
+
+
+
+moy_pix = lambda pix : (pix[0]+pix[1]+pix[2])/3.
+
+def contraste(pix,i,j,delta):
+	seuil = 255./2.
+	moy = moy_pix(pix[i,j])
+	
+	if(moy>seuil):
+		return luminosite(pix,i,j,delta) 
+	else: 
+		return luminosite(pix,i,j,(-1.)*delta)
+
+
+def contraste_l(pixin,pixout,size,delta):
+	for i in range(size[0]):
+		for j in range(size[1]):
+			pixout[i,j] = contraste(pixin, i, j, delta)
 
 
 
@@ -49,19 +79,11 @@ def luminosite(pix, i, j, delta):
 
 
 
-####
-##  PARTIE CONTRASTE II	
+def luminosite_l(pixin,pixout,size,delta):
+	for i in range(size[0]):
+		for j in range(size[1]):
+			pixout[i,j] = luminosite(pixin, i, j, delta)
 
-moy_pix = lambda pix : (pix[0]+pix[1]+pix[2])/3.
-
-def contraste_v2(pix,i,j,delta):
-	seuil = 255./2.
-	moy = moy_pix(pix[i,j])
-	
-	if(moy>seuil):
-		return luminosite(pix,i,j,delta) 
-	else: 
-		return luminosite(pix,i,j,(-1.)*delta)
 
 
 
@@ -70,3 +92,8 @@ def contraste_v2(pix,i,j,delta):
 
 def filtre(pix,i,j,alpha,beta,gamma):
 	return (lumi_delta(pix[i,j][0],alpha),lumi_delta(pix[i,j][1],beta),lumi_delta(pix[i,j][2],gamma))
+
+def filtre_l(pixin,pixout,size,alpha,beta,gamma):
+	for i in range(size[0]):
+		for j in range(size[1]):
+			pixout[i,j] = filtre(pixin, i, j, alpha, beta, gamma)

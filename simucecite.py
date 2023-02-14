@@ -46,3 +46,19 @@ lumi_delta = lambda y,delta : int(lumiarc(reci_lumiarc(y) + delta))
 
 def luminosite(pix, i, j, delta):
 	return (lumi_delta(pix[i,j][0],delta),lumi_delta(pix[i,j][1],delta),lumi_delta(pix[i,j][2],delta))
+
+
+
+####
+##  PARTIE CONTRASTE II	
+
+moy_pix = lambda pix : (pix[0]+pix[1]+pix[2])/3.
+
+def contraste_v2(pix,i,j,delta):
+	seuil = 255./2.
+	moy = moy_pix(pix[i,j])
+	
+	if(moy>seuil):
+		return luminosite(pix,i,j,delta) 
+	else: 
+		return luminosite(pix,i,j,(-1.)*delta)

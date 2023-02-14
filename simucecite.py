@@ -62,3 +62,11 @@ def contraste_v2(pix,i,j,delta):
 		return luminosite(pix,i,j,delta) 
 	else: 
 		return luminosite(pix,i,j,(-1.)*delta)
+
+
+
+####
+##  PARTIE FILTRE COULEUR
+
+def filtre(pix,i,j,alpha,beta,gamma):
+	return (lumi_delta(pix[i,j][0],alpha),lumi_delta(pix[i,j][1],beta),lumi_delta(pix[i,j][2],gamma))

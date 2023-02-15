@@ -67,6 +67,18 @@ def contraste_l(pixin,pixout,size,seuil_normal,delta):
 			pixout[i,j] = contraste(pixin, i, j, seuil_normal, delta)
 
 
+def demi_contraste_m(pixin,i,j,seuil,delta):
+	if (lumi_pix_moyenne(pixin,i,j))<seuil:
+		return luminosite(pixin,i,j,delta)
+	else:
+		return pixin[i,j]
+
+
+def demi_contraste_m_l(pixin,pixout,size,seuil,delta):
+	for i in range(size[0]):
+		for j in range(size[1]):
+			pixout[i,j] = demi_contraste_m(pixin,i,j,seuil,delta)
+
 
 #####
 ###  PARTIE LUMINOSITE
@@ -103,13 +115,15 @@ def filtre_l(pixin,pixout,size,alpha,beta,gamma):
 #####
 ##  PARTIE LUMINOSITE MOYENNE
 
+lumi_pix_moyenne = lambda pix,i,j : (pix[i,j][0]+pix[i,j][1]+pix[i,j][2])/3.
+
 def lumi_moyenne_t(pixin,size):
 	somme = 0
-	ponderation = size[0]*size[1]*3
+	ponderation = size[0]*size[1]
 
 	for i in range(size[0]):
 		for j in range(size[1]):
-			somme += pixin[i,j][0] + pixin[i,j][1] + pixin[i,j][2]
+			somme += lumi_pix_moyenne(pixin,i,j)
 	somme = somme * 1.
 
 	return (somme/ponderation)
@@ -121,7 +135,7 @@ def lumi_moyenne_MC(pixin,size):
 	for i in range(1000):
 		x = rd.randint(0,size[0]-1)
 		y = rd.randint(0,size[1]-1)
-		somme += pixin[x,y][0] + pixin[x,y][1] + pixin[x,y][2]
+		somme += lumi_pix_moyenne(pixin,x,y)
 	somme = somme*1.
 	
-	return (somme/3000.)
+	return (somme/1000.)

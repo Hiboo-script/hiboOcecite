@@ -174,7 +174,7 @@ def propo_pixel(pixin, i, j, ratio):
 	return (proportionnelle(ratio,pixin[i,j][0]),proportionnelle(ratio,pixin[i,j][1]),proportionnelle(ratio,pixin[i,j][2]))
 
 
-poly_sigma = lambda x : ((4000.-150.)/(255.**2))*(x-255.)**2 + 150.
+poly_sigma = lambda x : ((6000.-150.)/(255.**2))*(x-255.)**2 + 150.
 
 normal = lambda x : np.random.normal(255.,poly_sigma(x))
 

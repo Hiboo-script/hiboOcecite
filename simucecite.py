@@ -28,9 +28,16 @@ def moyenne(i,j,r,pix):
 	return (int(somme[0]/ponderation[0]),int(somme[1]/ponderation[1]),int(somme[2]/ponderation[2]))
 
 def moyenne_l(pixin,pixout,size,r):
-	for i in range(20,size[0]-20):
-		for j in range(20,size[1]-20):
-			pixout[i,j] = moyenne(i,j,r,pixin)
+	"""
+	calcul de la moyenne itere sur tous les pixel de l'image
+	retourne rien, tout est ecrit dans pixout
+	"""
+	for x in range(size[0]):
+		for y in range(size[1]):
+			if (x<20) or (x>size[0]-20) or (y<20) or (y>size[1]-20):
+				pixout[x,y] = pixin[x,y]
+			else:
+				pixout[x,y] = moyenne(x,y,r,pixin)
 
 
 ####
@@ -51,8 +58,11 @@ def contrasteExplo_l(pixin,pixout,size):
 
 moy_pix = lambda pix : (pix[0]+pix[1]+pix[2])/3.
 
-def contraste(pix,i,j,seuil_normal,delta):
-	seuil = 255*seuil_normal
+def contraste(pix,i,j,seuil,delta):
+	"""
+	contraste un pixel avec un seuil de reference ([0;255]) et une intensite delta (float)
+	retourne les valeur du pixel contraste dans un 3-tuple
+	"""
 	moy = moy_pix(pix[i,j])
 	
 	if(moy>seuil):
@@ -164,7 +174,7 @@ def propo_pixel(pixin, i, j, ratio):
 	return (proportionnelle(ratio,pixin[i,j][0]),proportionnelle(ratio,pixin[i,j][1]),proportionnelle(ratio,pixin[i,j][2]))
 
 
-poly_sigma = lambda x : ((4000.-150.)/(255.**2))*(x-255.)**2 + 150.
+poly_sigma = lambda x : ((6000.-150.)/(255.**2))*(x-255.)**2 + 150.
 
 normal = lambda x : np.random.normal(255.,poly_sigma(x))
 
@@ -195,13 +205,12 @@ def simuphotopsie(pochoir, calque, pixout, size):
 #####
 ## GENERATION RANDOM IMAGE
 
-def random_image(nom_image, size):
-	im = Image.new('RGB',size)
-	pix = im.load()
-
+def random_image(pix, size):
+	"""
+	genere une image avec des pixels uniformement aleatoire
+	ne retourne rien, ecrit tout dans pix
+	"""
 	for x in range(size[0]):
 		for y in range(size[1]):
-			pix[i,j] = (rd.randint(0,255),rd.randint(0,255),rd.randint(0,255))
-
-	im.save(nom_image)
+			pix[x,y] = (rd.randint(0,255),rd.randint(0,255),rd.randint(0,255))
 

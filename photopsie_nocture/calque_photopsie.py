@@ -1,14 +1,14 @@
 import simucecite as sc
 
-size = (100,100)
-"""
-imin = sc.Image.open("test_calque_4.png")
+size = (512,512)
+
+imin = sc.Image.new('RGB',size)
 pixin = imin.load()
 
 imout_1 = sc.Image.new('RGB',size)
 pixout_1 = imout_1.load()
-"""
-imout_2 = sc.Image.open("test_calque_7.png")
+
+imout_2 = sc.Image.new('RGB',size)
 pixout_2 = imout_2.load()
 
 imout_3 = sc.Image.new('RGB',size)
@@ -23,10 +23,10 @@ seuil = 255./2
 
 rayon = 10 #rayon pour la moyenne
 
-delta = 2.6
+delta = 0.6
 
-nom_save = "test_calque_12.png"
-"""
+nom_save = "calque_4.png"
+
 print("generation d'une image aleatoire de taille : "+str(size[0])+"x"+str(size[1]))
 sc.random_image(pixin,size)
 
@@ -35,12 +35,13 @@ sc.filtre_l(pixin,pixout_1,size,alpha,beta,gamma)
 
 print("application de la moyenne de rayon="+str(rayon))
 sc.moyenne_l(pixout_1,pixout_2,size,rayon)
-"""
+
 print("calcul du seuil moyen de luminosite...")
 seuil = sc.lumi_moyenne_MC(pixout_2,size)
 print("seuil="+str(seuil))
 
-print("application du contraste : delta="+str(delta))
+seuil=seuil-0.5
+print("application du contraste : delta="+str(delta)+" ; seuil="+str(seuil))
 sc.contraste_l(pixout_2,pixout_3,size,seuil,delta)
 
 print("sauvegarde sous le nom : "+ nom_save)

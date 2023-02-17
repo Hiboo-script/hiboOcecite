@@ -139,3 +139,55 @@ def lumi_moyenne_MC(pixin,size):
 	somme = somme*1.
 	
 	return (somme/1000.)
+
+
+#####
+### PARTIE PHOTOPSIE, CALQUE, POCHOIR
+
+def proportionnelle(ratio,value):
+	"""
+	[0,255]x[0,255] -> [[0,255]]
+	proportionnalise la value a partir du ratio !
+	retourne la value proportionne
+	"""
+	proportion = (ratio*1.)/255
+	
+	return int(value*proportion)
+
+
+def propo_pixel(pixin, i, j, ratio):
+	"""
+	applique la proportionnelle a un pixel,
+	retourne le pixel entier
+	"""
+	
+	return (proportionnelle(ratio,pixin[i,j][0]),proportionnelle(ratio,pixin[i,j][1]),proportionnelle(ratio,pixin[i,j][2]))
+
+
+poly_sigma = lambda x : ((4000.-150.)/(255.**2))*(x-255.)**2 + 150.
+
+normal = lambda x : np.random.normal(255.,poly_sigma(x))
+
+
+def pix_simuphotopsie(pochoir,calque,i,j):
+	"""
+	calcul le pixel final a partir du pochoir et du calque
+	retourne le pixel	
+	"""
+	norm = normal(pochoir[i,j][0])
+	# gere les cas ou la loi normal part trop loin de 255
+	if (norm > 255):
+		norm = 510 - norm
+	if (norm < 0):
+		norm = 0
+	return propo_pixel(calque, i, j, norm)
+
+def simuphotopsie(pochoir, calque, pixout, size):
+	"""
+	itere pix_simuphotopsie sur toute l'image
+	retourne rien, applique tout sur pixout
+	"""
+	for x in range(size[0]):
+		for y in range(size[1]):
+			pixout[x,y] = pix_simuphotopsie(pochoir, calque, x, y)
+

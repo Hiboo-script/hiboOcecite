@@ -1,12 +1,19 @@
 import simucecite as sc
 
-size = (256,256)
-
-imin = sc.Image.open("test01.png")
+size = (100,100)
+"""
+imin = sc.Image.open("test_calque_4.png")
 pixin = imin.load()
 
-imout = sc.Image.new('RGB',size)
-pixout = imout.load()
+imout_1 = sc.Image.new('RGB',size)
+pixout_1 = imout_1.load()
+"""
+imout_2 = sc.Image.open("test_calque_7.png")
+pixout_2 = imout_2.load()
+
+imout_3 = sc.Image.new('RGB',size)
+pixout_3 = imout_3.load()
+
 
 alpha = -0.6
 beta = 0.2
@@ -16,13 +23,25 @@ seuil = 255./2
 
 rayon = 10 #rayon pour la moyenne
 
-delta = 0.6
+delta = 2.6
 
-sc.filtre_l(pixin,pixout,size,alpha,beta,gamma)
-sc.moyenne_l(pixout,pixout,size,rayon)
+nom_save = "test_calque_12.png"
+"""
+print("generation d'une image aleatoire de taille : "+str(size[0])+"x"+str(size[1]))
+sc.random_image(pixin,size)
 
-seuil = sc.lumi_moyenne_MC(pixout,size)
+print("filtrage des couleurs de l'image : alpha="+str(alpha)+";beta="+str(beta)+";gamma="+str(gamma))
+sc.filtre_l(pixin,pixout_1,size,alpha,beta,gamma)
 
-sc.contraste_l(pixout,pixout,size,seuil,delta)
+print("application de la moyenne de rayon="+str(rayon))
+sc.moyenne_l(pixout_1,pixout_2,size,rayon)
+"""
+print("calcul du seuil moyen de luminosite...")
+seuil = sc.lumi_moyenne_MC(pixout_2,size)
+print("seuil="+str(seuil))
 
-imout.save("test_pochoir_photopsie.png")
+print("application du contraste : delta="+str(delta))
+sc.contraste_l(pixout_2,pixout_3,size,seuil,delta)
+
+print("sauvegarde sous le nom : "+ nom_save)
+imout_3.save(nom_save)

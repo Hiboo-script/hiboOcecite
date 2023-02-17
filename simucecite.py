@@ -191,3 +191,17 @@ def simuphotopsie(pochoir, calque, pixout, size):
 		for y in range(size[1]):
 			pixout[x,y] = pix_simuphotopsie(pochoir, calque, x, y)
 
+
+#####
+## GENERATION RANDOM IMAGE
+
+def random_image(nom_image, size):
+	im = Image.new('RGB',size)
+	pix = im.load()
+
+	for x in range(size[0]):
+		for y in range(size[1]):
+			pix[i,j] = (rd.randint(0,255),rd.randint(0,255),rd.randint(0,255))
+
+	im.save(nom_image)
+

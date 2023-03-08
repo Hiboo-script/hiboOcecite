@@ -1,8 +1,8 @@
 import simucecite as sc
 
-size = (552,552)
+size = (384,512)
 
-imin = sc.Image.open("images/calque_simulation_3.png")
+imin = sc.Image.open("skoda512.png")
 pixin = imin.load()
 
 imout = sc.Image.new('RGB', size)
@@ -13,4 +13,4 @@ moyenne = sc.lumi_moyenne_MC(pixin,size)
 
 sc.contraste_l(pixin,pixout,size,moyenne,delta)
 
-imout.save("images/calque_simulation_c_3.png")
+imout.save("images/skoda_contraste.png")

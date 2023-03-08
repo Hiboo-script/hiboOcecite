@@ -78,10 +78,22 @@ def contraste_l(pixin,pixout,size,seuil_normal,delta):
 
 
 def demi_contraste_m(pixin,i,j,seuil,delta):
-	if (lumi_pix_moyenne(pixin,i,j))<seuil:
-		return luminosite(pixin,i,j,delta)
+	"""
+	Assombris les pixels sombres quand delta est negatif
+	Eclaircis les pixels clairs quand delta est positif
+	Se refere a seuil pour determiner quels sont les zones claires et sombres
+	retourne un tuple de pixel
+	"""
+	if (delta>0):
+		if (lumi_pix_moyenne(pixin,i,j))>=seuil:
+			return luminosite(pixin,i,j,delta)
+		else:
+			return pixin[i,j]
 	else:
-		return pixin[i,j]
+		if (lumi_pix_moyenne(pixin,i,j))<seuil:
+			return luminosite(pixin,i,j,delta)
+		else:
+			return pixin[i,j]
 
 
 def demi_contraste_m_l(pixin,pixout,size,seuil,delta):

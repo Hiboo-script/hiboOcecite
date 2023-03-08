@@ -2,15 +2,15 @@ import simucecite as sc
 
 size = (512,512)
 
-imin = sc.Image.open("calque_moy_4.png")
+imin = sc.Image.open("images/calque_simulation_2_dc1.png")
 pixin = imin.load()
 
 imout = sc.Image.new('RGB', size)
 pixout = imout.load()
 
-delta = -15.
+delta = 0.3
 moyenne = sc.lumi_moyenne_MC(pixin,size)
 
-sc.demi_contraste_m_l(pixin,pixout,size,moyenne-2.,delta)
+sc.demi_contraste_m_l(pixin,pixout,size,moyenne,delta)
 
-imout.save("demi_contraste_calque_4.png")
+imout.save("images/calque_simulation_2_dc2.png")

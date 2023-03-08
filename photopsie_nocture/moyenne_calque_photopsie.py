@@ -1,15 +1,15 @@
 import simucecite as sc
 
-size = (512,512)
+size = (552,552)
 
-imin = sc.Image.open("simuphotopsie_7.png")
+imin = sc.Image.open("images/simuphotopsie_proto2_3.png")
 pixin = imin.load()
 
 imout = sc.Image.new('RGB',size)
 pixout = imout.load()
 
-rayon = 4
+rayon = 5
 
 sc.moyenne_l(pixin,pixout,size,rayon)
 
-imout.save("simuphotopsie_moy_7.png")
+imout.save("images/simuphotopsie_proto3_3.png")

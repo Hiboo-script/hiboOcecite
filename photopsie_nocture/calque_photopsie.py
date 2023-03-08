@@ -1,6 +1,6 @@
 import simucecite as sc
 
-size = (512,512)
+size = (552,552)
 
 imin = sc.Image.new('RGB',size)
 pixin = imin.load()
@@ -21,11 +21,11 @@ gamma = 0.8
 
 seuil = 255./2
 
-rayon = 10 #rayon pour la moyenne
+rayon = 5 #rayon pour la moyenne
 
-delta = 0.6
+delta = 1.
 
-nom_save = "calque_4.png"
+nom_save = "images/calque_simulation_3.png"
 
 print("generation d'une image aleatoire de taille : "+str(size[0])+"x"+str(size[1]))
 sc.random_image(pixin,size)
@@ -40,7 +40,7 @@ print("calcul du seuil moyen de luminosite...")
 seuil = sc.lumi_moyenne_MC(pixout_2,size)
 print("seuil="+str(seuil))
 
-seuil=seuil-0.5
+seuil=seuil-2.5
 print("application du contraste : delta="+str(delta)+" ; seuil="+str(seuil))
 sc.contraste_l(pixout_2,pixout_3,size,seuil,delta)
 

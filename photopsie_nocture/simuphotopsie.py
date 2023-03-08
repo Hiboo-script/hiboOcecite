@@ -1,11 +1,11 @@
 import simucecite as sc
 
-size = (512,512)
+size = (552,552)
 
-im_pochoir = sc.Image.open("pochoir_peint_2.png")
+im_pochoir = sc.Image.open("images/pochoir_peint_7.png")
 pochoir = im_pochoir.load()
 
-im_calque = sc.Image.open("calque_final_4.png")
+im_calque = sc.Image.open("images/calque_simulation_moy_3.png")
 calque = im_calque.load()
 
 imout = sc.Image.new('RGB',size)
@@ -13,4 +13,4 @@ pixout = imout.load()
 
 sc.simuphotopsie(pochoir,calque,pixout,size)
 
-imout.save("simuphotopsie_7.png")
+imout.save("images/simuphotopsie_proto1_3.png")
